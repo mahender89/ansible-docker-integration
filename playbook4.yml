@@ -1,0 +1,13 @@
+---
+- name: create an ubuntu container and attach a volume
+  hosts: all
+  tasks:
+   - name: create ubuntu container
+     docker_container:
+      name: myubuntu
+      image: ubuntu
+      interactive: true
+      tty: true
+      volumes:
+       - /data
+...

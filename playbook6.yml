@@ -1,0 +1,22 @@
+---
+- name: create docker container for jenkins CI-CD setup
+  hosts: all
+  tasks: 
+   - name: create a jenkins container
+     docker_container:
+      name: myjenkins
+      image: jenkins/jenkins
+      ports:
+       - 2020:8080 
+   - name: create a tomcat as qaserver and prodserver
+     docker_container:
+      name: "{{item.a}}"
+      image: tomee
+      ports:
+       - "{{item.b}}"
+      links:
+       - myjenkins:jenkins
+     with_items:
+       - {a: qaserver,b: "6060:8080"}
+       - {a: prodserver,b: "7070:8080"}    
+...
